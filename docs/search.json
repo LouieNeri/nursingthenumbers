@@ -2,9 +2,30 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "Louie Neri",
+    "title": "About me",
     "section": "",
     "text": "Hi! I’m Louie Neri. I’m a nurse researcher with a lot of interests, mainly in biostatistics, epidemiology, health economics, nutrition, exercise science, and mental health.\nI graduated with a BSN-RD (Research Distinction) from UT Health San Antonio and was an undergraduate researcher at the Audie Murphy VA Hospital/UT Health San Antonio Barshop Institute. My research focus was on the connection between nutrition, lifestyle, and outcomes in stroke, diabetes, and cognitive decline.\nCurrently, I work as the Senior Coordinator for Evidence Based Surgery at the Society of Thoracic Surgeons, where I spearhead efforts to create clinical practice guidelines. I am also an incoming MSPH student with a concentration in Oucomes Research at the University of Alabama at Birmingham. Previously, I worked as a Researcher and Team Lead at Examine.com, the internet’s largest nutrition database."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About me",
+    "section": "Education",
+    "text": "Education\nUniversity of Alabama at Birmingham | Birmingham, AL (Remote)\nMasters of Science in Public Health (MSPH) | August 2024 – December 2026\nUniversity of Texas Health Science Center at San Antonio | San Antonio, TX\nBachelors of Science in Nursing with a Distinction in Research (BSN-RD) | August 2020 – May 2022"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About me",
+    "section": "Experience",
+    "text": "Experience\nSenior Coordinator, Evidence Based Surgery | The Society of Thoracic Surgeons | September 2023 – Current\nResearch Team Lead | Examine.com | December 2022 – September 2023\nResearcher | Examine.com | May 2021 – December 2022\nUndergraduate Researcher | Audie Murphy VA Hospital/UT Health San Antonio | October 2022 – May 2022"
+  },
+  {
+    "objectID": "about.html#some-kind-words-from-a-close-mentor",
+    "href": "about.html#some-kind-words-from-a-close-mentor",
+    "title": "About me",
+    "section": "Some kind words from a close mentor:",
+    "text": "Some kind words from a close mentor:\n\n“It is rare to find a human as inquisitive as Louie. He has the soul of a scientist, the heart of a physician, and the cleverness of a crow. His dedication to self-improvement through understanding the scientific principles of biochemistry and research methods is unparalleled. It was a true joy to have Louie in my courses as we constantly encourage mutual curiosity by debating the latest science. I am grateful to count him as a student and friend, and I am honored for him to be a professional colleague in the scientific community.”\n\nDeana Apple, PhD"
   },
   {
     "objectID": "posts/welcome/index.html",
@@ -23,29 +44,8 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Nursing the Numbers",
+    "title": "The meanderings of a nurse trying to make sense of science",
     "section": "",
     "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 14, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 11, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "Louie Neri",
-    "section": "Education",
-    "text": "Education\nUniversity of Alabama at Birmingham | Birmingham, AL (Remote)\nMasters of Science in Public Health (MSPH) | August 2024 – December 2026\nUniversity of Texas Health Science Center at San Antonio | San Antonio, TX\nBachelors of Science in Nursing with a Distinction in Research (BSN-RD) | August 2020 – May 2022"
-  },
-  {
-    "objectID": "about.html#experience",
-    "href": "about.html#experience",
-    "title": "Louie Neri",
-    "section": "Experience",
-    "text": "Experience\nSenior Coordinator, Evidence Based Surgery | The Society of Thoracic Surgeons | September 2023 – Current\nResearch Team Lead | Examine.com | December 2022 – September 2023\nResearcher | Examine.com | May 2021 – December 2022\nUndergraduate Researcher | Audie Murphy VA Hospital/UT Health San Antonio | October 2022 – May 2022"
-  },
-  {
-    "objectID": "about.html#some-kind-words-from-a-close-mentor",
-    "href": "about.html#some-kind-words-from-a-close-mentor",
-    "title": "Louie Neri",
-    "section": "Some kind words from a close mentor:",
-    "text": "Some kind words from a close mentor:\n\n“It is rare to find a human as inquisitive as Louie. He has the soul of a scientist, the heart of a physician, and the cleverness of a crow. His dedication to self-improvement through understanding the scientific principles of biochemistry and research methods is unparalleled. It was a true joy to have Louie in my courses as we constantly encourage mutual curiosity by debating the latest science. I am grateful to count him as a student and friend, and I am honored for him to be a professional colleague in the scientific community.”\n\nDeana Apple, PhD"
   }
 ]

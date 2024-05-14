@@ -1,5 +1,5 @@
 ---
-title: "Nursing the Numbers"
+title: "The meanderings of a nurse trying to make sense of science"
 listing:
   contents: posts
   sort: "date desc"
