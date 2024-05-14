@@ -2,7 +2,7 @@
 title: "About"
 image: headshot.jpg
 about:
-  template: broadside
+  template: trestles
   links:
     - icon: twitter
       text: Twitter
