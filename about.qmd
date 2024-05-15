@@ -1,8 +1,9 @@
 ---
-title: "About me"
+title: "Louie Neri"
 image: headshot.jpg
 about:
   template: trestles
+  image-shape: round
   links:
     - icon: twitter
       text: Twitter
@@ -15,11 +16,11 @@ about:
       href: https://github.com
 ---
 
-Hi! I’m Louie Neri. I'm a nurse researcher with a lot of interests, mainly in biostatistics, epidemiology, health economics, nutrition, exercise science, and mental health.
+Hello there! I'm a nurse researcher with a passion for biostatistics, epidemiology, health economics, nutrition, exercise science, and mental health.
 
-I graduated with a BSN-RD (Research Distinction) from UT Health San Antonio and was an undergraduate researcher at the Audie Murphy VA Hospital/UT Health San Antonio Barshop Institute. My research focus was on the connection between nutrition, lifestyle, and outcomes in stroke, diabetes, and cognitive decline.
+I earned my BSN with Research Distinction from UT Health San Antonio, where I researched the impact of nutrition and lifestyle on stroke, diabetes, and cognitive decline.
 
-Currently, I work as the Senior Coordinator for Evidence Based Surgery at the Society of Thoracic Surgeons, where I spearhead efforts to create clinical practice guidelines. I am also an incoming MSPH student with a concentration in Oucomes Research at the University of Alabama at Birmingham. Previously, I worked as a Researcher and Team Lead at Examine.com, the internet's largest nutrition database.
+Currently, I'm the Senior Coordinator for Evidence Based Surgery at The Society of Thoracic Surgeons, where I'm lucky enough to work with some outstanding surgeons to develop clinical practice guidelines. I'm also an incoming MSPH student in Outcomes Research at the University of Alabama at Birmingham. Previously, I was a Researcher and Team Lead at Examine.com, the largest online nutrition database.
 
 ## Education
 
