@@ -13,7 +13,7 @@ about:
       href: https://www.linkedin.com/in/louie-neri/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/louieneri
 ---
 
 Hello there! I'm a nurse researcher with a passion for biostatistics, epidemiology, health economics, nutrition, exercise science, and mental health.

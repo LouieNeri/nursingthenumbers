@@ -3,6 +3,7 @@ project:
   output-dir: docs
 
 website:
+  favicon: headshot.jpg
   title: "Nursing the Numbers"
   navbar:
     right:
