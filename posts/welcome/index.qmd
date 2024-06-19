@@ -2,8 +2,7 @@
 title: "The beginning..."
 author: "Louie Neri"
 date: "06/19/2024"
-draft: true
-categories: [news]
+image: thumbnail.jpg
 ---
 
 ## How this madness began
@@ -18,7 +17,7 @@ I first got interested in science because of a myriad of health issues that had 
 
 All I had left was free time, and my laptop. Scouring the internet for answers, I ended up in engrossed in the functional medicine world, trying to teach myself as much about the human body as possible. I found a local functional medicine doctor in my town, who miraculously healed me with a combination of dietary supplements and meditation. After trying a few different career paths, this experience led me to go to nursing school, with the hopes of becoming some sort of holistic-yet-scientific nurse practitioner.
 
-### Returning to mainstream medicine and 
+### Returning to mainstream medicine and
 
 Now, this isn't some sort of miracle healing story. My ailments began to return while getting my pre-requisite classess for nursing school, which involved a bunch of basic science classes.
 
