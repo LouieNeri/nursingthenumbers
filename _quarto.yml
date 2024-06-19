@@ -3,16 +3,18 @@ project:
   output-dir: docs
 
 website:
-  favicon: headshot.jpg
   title: "Nursing the Numbers"
   navbar:
     right:
       - text: "About me" 
-        href: about.qmd
-      - icon: github
-        href: https://github.com/
+        href: https://louieneri.github.io/
       - icon: twitter
-        href: https://twitter.com
+        href: https://twitter.com/louieneri_ 
+      - icon: linkedin
+        href: https://www.linkedin.com/in/louie-neri/
+      - icon: github
+        href: https://github.com/louieneri 
+        
 format:
   html:
     theme: 
