@@ -28,13 +28,6 @@
     "text": "Some kind words from a close mentor:\n\n“It is rare to find a human as inquisitive as Louie. He has the soul of a scientist, the heart of a physician, and the cleverness of a crow. His dedication to self-improvement through understanding the scientific principles of biochemistry and research methods is unparalleled. It was a true joy to have Louie in my courses as we constantly encourage mutual curiosity by debating the latest science. I am grateful to count him as a student and friend, and I am honored for him to be a professional colleague in the scientific community.”\n\nDeana Apple, PhD"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
@@ -46,6 +39,6 @@
     "href": "index.html",
     "title": "The meanderings of a nurse trying to make sense of science",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nMay 14, 2024\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nMay 11, 2024\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "No matching items"
   }
 ]
