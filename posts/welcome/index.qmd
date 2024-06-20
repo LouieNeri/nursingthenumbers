@@ -9,30 +9,32 @@ image: thesickchild.jpg
 
 ## How this all began
 
-Greetings! Welcome to the inaugural post of my blog "Nursing the numbers."
+Greetings! Welcome to the inaugural post of my blog "Nursing the Numbers."
 
 As a quick introduction, I'm Louie Neri, a nurse who never ended up nursing, somwhow ended up in the nutrition science world, and now find myself in the clinical practice guideline universe. I wanted to give a brief introduction to myself, how I got here, and the goal of this blog.
 
 ### Health issues and functional medicine
 
-I first got interested in science because of a myriad of health issues that had me bed-ridden in high school. Although I will spare the details (perhaps I can explain this for another time), I ended up dislocating my shoulder playing basketball, resulting in a paradoxical bilateral frozen shoulder, could not stand up straight without feeling like I was going to pass out, covered in severe (and I mean *severe* eczema), severe gastritis, and irritable bowel syndrome (IBS), concurrently. All at the ripe age of 17.
+I first got interested in science because of a myriad of health issues that had me bed-ridden in high school. Although I will spare the details for now, I ended up dislocating my shoulder playing basketball, resulting in a paradoxical bilateral frozen shoulder, could not stand up straight without feeling like I was going to pass out, covered in severe eczema, nausea from gastritis, and irritable bowel syndrome (IBS), at the same time, all at the ripe age of 17.
 
 All I had left was free time, and my laptop. Scouring the internet for answers, I ended up in engrossed in the functional medicine world, trying to teach myself as much about the human body as possible. I found a local functional medicine doctor in my town, who miraculously healed me with a combination of dietary supplements and meditation. After trying a few different career paths, this experience led me to go to nursing school, with the hopes of becoming some sort of holistic-yet-scientific nurse practitioner.
 
 ### Returning to mainstream medicine
 
-Now, this isn't some sort of miracle healing story. My ailments began to return while getting my pre-requisite classess for nursing school, which involved a bunch of basic science classes.
+Now, this isn't some sort of miracle healing story. My ailments began to return while getting my pre-requisite courses for nursing school, which involved a bunch of basic science classes.
 
-Taking these classes made me realize how much I did *not* know, and was better able to evaluate the claims commonly made in health research. I ended up being disengaged with functional medicine as a whole, realizing how poor the research truly was.
+Taking these classes made me realize how much I did *not* know. I was better able to evaluate the claims commonly made in health research and ended up disassociating myself with functional medicine in general.
 
-When I went to nursing school, I got lucky to go to a huge academic research institution, where we had a "research distinction" program. By sheer luck, I got matched with a nutrition health scientist as my advisor, where I was able to see how science really worked.
+When I went to nursing school, I got lucky to attend a huge academic research institution, where we had a "research distinction" program. By sheer luck, I got matched with a nutrition health scientist as my advisor, where I was able to see how science really worked.
 
-I now find myself more aligned with more "mainstream" medicine (whatever that means). I'm now interested more in the big picture of how our healthcare system works, as opposed to the nitty gritty details of treating patients (although I do miss that work).
+### Where I'm at now
 
-After graduating with my BSN and doing some nutrition research, I ended up working for the amazing company Examine.com, and now I develop clinical practice guidelines for a medical association.
+I now find myself more aligned with "mainstream" medicine (whatever that means). I'm now interested in the big picture of how our healthcare system works, as opposed to the nitty gritty details of treating patients (although I do miss that work).
+
+After graduating with my BSN and doing some nutrition research, I ended up working for the amazing company Examine.com for a couple years, and now I develop clinical practice guidelines for a medical association.
 
 ## The purpose of this blog
 
 The main purpose of this blog is to act as a diary of sorts while I think about or teach myself things related to biostatistics, epidemiology, health economics, and science as a whole. My hope is that, in a few years or so, I will look back at what I've written and be proud of how much I've learned, and realize how much I didn't know.
 
-Please don't take anything I say here as absolute truth, and please let me know if I'm horribly wrong on anything. I probably will be, and I'm learning to be okay with that.
+Please don't take anything I say here as absolute truth, and please let me know if I'm horribly wrong on anything. I probably will be wrong, and I'm learning to be okay with that.
