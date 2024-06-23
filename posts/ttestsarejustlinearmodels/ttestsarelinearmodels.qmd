@@ -1,7 +1,7 @@
 ---
 title: "T-tests are just linear models"
 author: "Louie Neri"
-date: "06/19/2024"
+date: "06/22/2024"
 format:
   html:
     mermaid:
