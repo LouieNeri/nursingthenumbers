@@ -4,6 +4,7 @@ author: "Louie Neri"
 date: "06/22/2024"
 format:
   html:
+    toc: true
     mermaid:
       theme: default
     code-fold: true
