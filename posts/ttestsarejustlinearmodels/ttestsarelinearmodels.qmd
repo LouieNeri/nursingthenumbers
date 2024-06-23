@@ -1,0 +1,197 @@
+---
+title: "T-tests are just linear models"
+author: "Louie Neri"
+date: "06/19/2024"
+draft: true
+format:
+  html:
+    mermaid:
+      theme: default
+    code-fold: true
+---
+
+# The madness of statistical tests
+
+In your introductory statistics class, you're introduced to a myriad of statistical tests that are confusing and have weird names of scientists you've never heard of. You do some Googling or look in the appendix of your textbook, and you find a neat graph that looks something like this:
+
+```{mermaid}
+flowchart TD
+  subgraph Parametric_assumptions[Parametric assumptions]
+        direction TB
+        Z1[1. Independent samples]
+        Z2[2. Data normally distributed]
+        Z3[3. Equal variances]
+    end
+
+    A[Type of data?] -->|Continuous| B[Type of question?]
+    A -->|Discrete, categorical| C[Any counts < 5?]
+    
+    B -->|Relationships| D[Do you have dependent & independent variables?]
+    B -->|Differences| E[Differences between what?]
+    
+    C -->|No| F[Chi-square tests, one and two sample]
+    C -->|Yes| G[Fisher's exact test]
+    
+    D -->|Yes| H[Regression analysis]
+    D -->|No| I[Correlation analysis]
+    
+    I -->|Parametric| J[Pearson's r]
+    I -->|Nonparametric| K[Spearman's rank correlation]
+    
+    E -->|Means| L[One-sample t-test]
+    E -->|Variances| M[Fmax test or Bartlett's test]
+    E -->|Multiple means Single variable| N[How many groups?]
+    
+    N -->|Two| O[Parametric assumptions satisfied?]
+    N -->|More than two| P[Parametric assumptions satisfied?]
+    
+    O -->|Yes| Q[Student's t-test]
+    O -->|No| R[Transform data?]
+    R -->|OK| Q
+    R -->|No| S[Mann-Whitney U or Wilcoxon test]
+    
+    P -->|Yes| T[One-way ANOVA]
+    P -->|No| U[Transform data?]
+    U -->|No| V[Kruskall-Wallis test]
+    U -->|OK| T
+    
+    T & V --> W[If significant, do post hoc test: Bonferroni's, Dunn's, Tukey's, etc.]
+    
+    
+```
+
+Great! Now, you know exactly which test you need to do *and* when to do it. However, this is probably not the best statistical practice. For some if not most people, this will probably get the job done. But, you may find yourself in scenarios with messy data that do not fit neatly into the flow chart, inadvertently violate some crucial assumption of the statistical test, and your methods go bye-bye.
+
+Let me introduce you to the linear model! Believe it or not, most statistical tests are really just variations of the linear model. To understand this, let's simulate some data and see how a simple two sample t-test is really a linear model!
+
+# Testing the world of shoe color and dunking
+
+```{r}
+#| label: loading packages
+#| results: hide
+
+library(tidyverse)
+library(ggthemes)
+```
+
+Here's the scenario: we live in a hypothetical world where shoe color affects the vertical of basketball players. In this case, red shoes allow players to jump higher when compared to blue shoes. Since I cannot dunk a basketball (I'm 5'7") and would love for this to be true, I'm going to put this to the test.
+
+I've recruited 40 players to study this shoe, allocating 20 players to wear the blue shoes and 20 to wear the red shoes. Each player records a vertical jump test, and their best height is recorded. Let's simulate this data and create a box plot to see how it looks.
+
+```{r}
+#| label: Simulating and visualizing data
+
+#setting the parameters
+set.seed(1234)
+
+n_players <- 40
+blue_mean <- 28
+red_mean <- 30
+sd <- 3
+
+#simulate jump heights in inches
+blue_jump_height <- rnorm(n_players, blue_mean, sd)
+red_jump_height <- rnorm(n_players, red_mean, sd)
+
+#create a dataframe
+jump_data <- data.frame(
+  player_id = 1:(2 * n_players),
+  shoe_color = rep(c("Blue", "Red"), each = n_players),
+  jump_height = c(blue_jump_height, red_jump_height)
+)
+
+#plot the data
+ggplot(jump_data, aes(x = shoe_color, y = jump_height, color = shoe_color)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) + 
+  geom_jitter() +
+  scale_color_manual(values = c(Blue = "#00BFC4", Red = "#F8766D")) +
+  labs(
+    x = "Shoe color",
+    y = "Vertical jump (inches)",
+  ) +
+  theme_tufte() +
+  theme(legend.position = "none")
+
+```
+
+Intuitively, we can tell that the blue shoes indeed increase vertical jump. However, let's verify this with the good ole two sample t-test.
+
+```{r}
+#| label: Doing a t-test
+
+t.test(jump_height ~ shoe_color, data = jump_data, var.equal = TRUE)
+```
+
+Now, another way to test this is to view the problem in the context of a simple linear regression, with a binary predictor. In this case, the binary predictor would be blue shoes or red shoes. First, let's review the formula for a simple linear regression.
+
+$$
+ \hat{y} = \hat{\beta}_0 + \hat{\beta}_1x
+$$
+
+If you're a bit rusty:
+
+-   $\hat{y}$ represents is the estimated dependent variable, in this case, vertical jump height.
+
+-   $\hat{\beta}_0$ represents the $\hat{y}$ intercept when x = 0, but in this case, it would be for those who are in the blue shoe group.
+
+-   $\hat{\beta}_1x$ represents the estimated slope coefficient, which tell us that how much y changes, on average, for a one-unit increase in x.
+
+What you'll see in a moment, is that fitting a regression line using this binary predictor is the same as doing a two sample t-test.
+
+Let's compute the simple linear regression!
+
+```{r}
+#| label: Linear regression and visualization
+
+#the regression model
+lm(formula = jump_height ~ shoe_color, data = jump_data) |> 
+  summary()
+
+#getting the mean jump height for plotting the linear regression line
+mean_jump_data <- jump_data |> 
+  group_by(shoe_color) |> 
+  summarize(mean_jump_height = mean(jump_height))
+
+#adding example regression line to previous plot
+ggplot(jump_data, aes(x = shoe_color, y = jump_height, color = shoe_color)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) + 
+  geom_jitter() +
+  scale_color_manual(values = c(Blue = "#00BFC4", Red = "#F8766D")) +
+  labs(
+    x = "Shoe color",
+    y = "Vertical jump (inches)",
+  ) +
+  theme_tufte() +
+  theme(legend.position = "none") +
+   geom_line(data = mean_jump_data, #adding example regression line
+            aes(x = shoe_color, y = mean_jump_height, group = 1),
+            size = 1.2,
+            color = "darkgray",
+            lineend = "round")
+```
+
+Now, interpreting the results of the linear regression, we can see that $\hat{\beta}_0$ = 26.7584, in other words, the estimated average jump height for players wearing blue shoes is ≤ 26.7584 inches. Additionally, $\hat{\beta}_1x$ = 3.0058, in other words, the average jump height of players wearing red shoes is ≤ 3.0058 inches.
+
+# How this all connects
+
+Let's pull up the results of both the t.test and the linear regression. Can you see what the similarities are? Before moving on, take a closer look at both the results, and then scroll down.
+
+```{r}
+#| label: Both the t-test and linear regression
+
+t.test(jump_height ~ shoe_color, data = jump_data, var.equal = TRUE)
+
+lm(formula = jump_height ~ shoe_color, data = jump_data) |> 
+  summary()
+
+```
+
+When you dig into both results, you stumble upon some similarities:
+
+-   The y-intercept: Remember $\hat{\beta}_0$ from our regression model? It's 26.7584. Take a peek at the mean jump height for the blue shoe group. Surprise, surprise! It's exactly the same number.
+
+-   The slope coefficient: Now, let's look at $\hat{\beta}_1$, our slope from the regression. It's 3.0058. Here's where it gets interesting. Grab your t-test results: • Red shoe group mean: 29.76422 • Blue shoe group mean: 26.75480 Do a quick subtraction: 29.76422 - 26.75480 = 3.00582 Look familiar? It's our regression slope!
+
+# Why this matters
+
+Hopefully this example helped expand your view on statistics a bit. Viewing statistics as a bunch of inflexible rules and tests can obscure the forest for the trees, and a connection like this reveals a hidden harmony in mathematics as a whole. By understanding these connections, you might be able to start crafting solutions to problems, rather than forcing square pegs into round holes.

@@ -9,7 +9,7 @@
 <meta name="author" content="Louie Neri">
 <meta name="dcterms.date" content="2024-06-19">
 
-<title>Nursing the Numbers - The beginning…</title>
+<title>Nursing the Numbers - T-tests are just linear models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -70,7 +104,40 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<meta name="mermaid-theme" content="default">
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -122,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">The beginning…</h1>
+      <h1 class="title">T-tests are just linear models</h1>
                       </div>
   </div>
     
@@ -158,37 +225,287 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-figure quarto-figure-center">
+<section id="the-madness-of-statistical-tests" class="level1">
+<h1>The madness of statistical tests</h1>
+<p>In your introductory statistics class, you’re introduced to a myriad of statistical tests that are confusing and have weird names of scientists you’ve never heard of. You do some Googling or look in the appendix of your textbook, and you find a neat graph that looks something like this:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  subgraph Parametric_assumptions[Parametric assumptions]
+        direction TB
+        Z1[1. Independent samples]
+        Z2[2. Data normally distributed]
+        Z3[3. Equal variances]
+    end
+
+    A[Type of data?] --&gt;|Continuous| B[Type of question?]
+    A --&gt;|Discrete, categorical| C[Any counts &lt; 5?]
+    
+    B --&gt;|Relationships| D[Do you have dependent &amp; independent variables?]
+    B --&gt;|Differences| E[Differences between what?]
+    
+    C --&gt;|No| F[Chi-square tests, one and two sample]
+    C --&gt;|Yes| G[Fisher's exact test]
+    
+    D --&gt;|Yes| H[Regression analysis]
+    D --&gt;|No| I[Correlation analysis]
+    
+    I --&gt;|Parametric| J[Pearson's r]
+    I --&gt;|Nonparametric| K[Spearman's rank correlation]
+    
+    E --&gt;|Means| L[One-sample t-test]
+    E --&gt;|Variances| M[Fmax test or Bartlett's test]
+    E --&gt;|Multiple means Single variable| N[How many groups?]
+    
+    N --&gt;|Two| O[Parametric assumptions satisfied?]
+    N --&gt;|More than two| P[Parametric assumptions satisfied?]
+    
+    O --&gt;|Yes| Q[Student's t-test]
+    O --&gt;|No| R[Transform data?]
+    R --&gt;|OK| Q
+    R --&gt;|No| S[Mann-Whitney U or Wilcoxon test]
+    
+    P --&gt;|Yes| T[One-way ANOVA]
+    P --&gt;|No| U[Transform data?]
+    U --&gt;|No| V[Kruskall-Wallis test]
+    U --&gt;|OK| T
+    
+    T &amp; V --&gt; W[If significant, do post hoc test: Bonferroni's, Dunn's, Tukey's, etc.]
+    
+    
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Great! Now, you know exactly which test you need to do <em>and</em> when to do it. However, this is probably not the best statistical practice. For some if not most people, this will probably get the job done. But, you may find yourself in scenarios with messy data that do not fit neatly into the flow chart, inadvertently violate some crucial assumption of the statistical test, and your methods go bye-bye.</p>
+<p>Let me introduce you to the linear model! Believe it or not, most statistical tests are really just variations of the linear model. To understand this, let’s simulate some data and see how a simple two sample t-test is really a linear model!</p>
+</section>
+<section id="testing-the-world-of-shoe-color-and-dunking" class="level1">
+<h1>Testing the world of shoe color and dunking</h1>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Here’s the scenario: we live in a hypothetical world where shoe color affects the vertical of basketball players. In this case, red shoes allow players to jump higher when compared to blue shoes. Since I cannot dunk a basketball (I’m 5’7”) and would love for this to be true, I’m going to put this to the test.</p>
+<p>I’ve recruited 40 players to study this shoe, allocating 20 players to wear the blue shoes and 20 to wear the red shoes. Each player records a vertical jump test, and their best height is recorded. Let’s simulate this data and create a box plot to see how it looks.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#setting the parameters</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>n_players <span class="ot">&lt;-</span> <span class="dv">40</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>blue_mean <span class="ot">&lt;-</span> <span class="dv">28</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>red_mean <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#simulate jump heights in inches</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>blue_jump_height <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_players, blue_mean, sd)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>red_jump_height <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_players, red_mean, sd)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#create a dataframe</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>jump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">player_id =</span> <span class="dv">1</span><span class="sc">:</span>(<span class="dv">2</span> <span class="sc">*</span> n_players),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">shoe_color =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Blue"</span>, <span class="st">"Red"</span>), <span class="at">each =</span> n_players),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">jump_height =</span> <span class="fu">c</span>(blue_jump_height, red_jump_height)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#plot the data</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(jump_data, <span class="fu">aes</span>(<span class="at">x =</span> shoe_color, <span class="at">y =</span> jump_height, <span class="at">color =</span> shoe_color)) <span class="sc">+</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Blue =</span> <span class="st">"#00BFC4"</span>, <span class="at">Red =</span> <span class="st">"#F8766D"</span>)) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Shoe color"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Vertical jump (inches)"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
 <figure class="figure">
-<p><img src="thesickchild.jpg" title="Edward Munch, The Sick Child, 1907 © CC-BY-NC-ND 3.0" class="img-fluid figure-img" style="width:60.0%"></p>
-<figcaption>Edward Munch, The Sick Child, 1907 © CC-BY-NC-ND 3.0</figcaption>
+<p><img src="ttestsarelinearmodels_files/figure-html/Simulating and visualizing data-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
-<section id="how-this-all-began" class="level2">
-<h2 class="anchored" data-anchor-id="how-this-all-began">How this all began</h2>
-<p>Greetings! Welcome to the inaugural post of my blog “Nursing the Numbers.”</p>
-<p>As a quick introduction, I’m Louie Neri, a nurse who never ended up nursing, somwhow ended up in the nutrition science world, and now find myself in the clinical practice guideline universe. I wanted to give a brief introduction to myself, how I got here, and the goal of this blog.</p>
-<section id="health-issues-and-functional-medicine" class="level3">
-<h3 class="anchored" data-anchor-id="health-issues-and-functional-medicine">Health issues and functional medicine</h3>
-<p>I first got interested in science because of a myriad of health issues that had me bed-ridden in high school. Although I will spare the details for now, I ended up dislocating my shoulder playing basketball, resulting in a paradoxical bilateral frozen shoulder, could not stand up straight without feeling like I was going to pass out, covered in severe eczema, nausea from gastritis, and irritable bowel syndrome (IBS), at the same time, all at the ripe age of 17.</p>
-<p>All I had left was free time, and my laptop. Scouring the internet for answers, I ended up in engrossed in the functional medicine world, trying to teach myself as much about the human body as possible. I found a local functional medicine doctor in my town, who miraculously healed me with a combination of dietary supplements and meditation. After trying a few different career paths, this experience led me to go to nursing school, with the hopes of becoming some sort of holistic-yet-scientific nurse practitioner.</p>
+</div>
+</div>
+<p>Intuitively, we can tell that the blue shoes indeed increase vertical jump. However, let’s verify this with the good ole two sample t-test.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jump_height <span class="sc">~</span> shoe_color, <span class="at">data =</span> jump_data, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  jump_height by shoe_color
+t = -4.4733, df = 78, p-value = 2.586e-05
+alternative hypothesis: true difference in means between group Blue and group Red is not equal to 0
+95 percent confidence interval:
+ -4.343579 -1.668066
+sample estimates:
+mean in group Blue  mean in group Red 
+          26.75840           29.76422 </code></pre>
+</div>
+</div>
+<p>Now, another way to test this is to view the problem in the context of a simple linear regression, with a binary predictor. In this case, the binary predictor would be blue shoes or red shoes. First, let’s review the formula for a simple linear regression.</p>
+<p><span class="math display">\[
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1x
+\]</span></p>
+<p>If you’re a bit rusty:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{y}\)</span> represents is the estimated dependent variable, in this case, vertical jump height.</p></li>
+<li><p><span class="math inline">\(\hat{\beta}_0\)</span> represents the <span class="math inline">\(\hat{y}\)</span> intercept when x = 0, but in this case, it would be for those who are in the blue shoe group.</p></li>
+<li><p><span class="math inline">\(\hat{\beta}_1x\)</span> represents the estimated slope coefficient, which tell us that how much y changes, on average, for a one-unit increase in x.</p></li>
+</ul>
+<p>What you’ll see in a moment, is that fitting a regression line using this binary predictor is the same as doing a two sample t-test.</p>
+<p>Let’s compute the simple linear regression!</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the regression model</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> jump_height <span class="sc">~</span> shoe_color, <span class="at">data =</span> jump_data) <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = jump_height ~ shoe_color, data = jump_data)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-5.795 -1.972 -0.425  1.714  8.489 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    26.7584     0.4751  56.317  &lt; 2e-16 ***
+shoe_colorRed   3.0058     0.6720   4.473 2.59e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.005 on 78 degrees of freedom
+Multiple R-squared:  0.2042,    Adjusted R-squared:  0.194 
+F-statistic: 20.01 on 1 and 78 DF,  p-value: 2.586e-05</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#getting the mean jump height for plotting the linear regression line</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mean_jump_data <span class="ot">&lt;-</span> jump_data <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(shoe_color) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_jump_height =</span> <span class="fu">mean</span>(jump_height))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#adding example regression line to previous plot</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(jump_data, <span class="fu">aes</span>(<span class="at">x =</span> shoe_color, <span class="at">y =</span> jump_height, <span class="at">color =</span> shoe_color)) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span> </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">Blue =</span> <span class="st">"#00BFC4"</span>, <span class="at">Red =</span> <span class="st">"#F8766D"</span>)) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Shoe color"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Vertical jump (inches)"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_tufte</span>() <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>   <span class="fu">geom_line</span>(<span class="at">data =</span> mean_jump_data, <span class="co">#adding example regression line</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> shoe_color, <span class="at">y =</span> mean_jump_height, <span class="at">group =</span> <span class="dv">1</span>),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"darkgray"</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">lineend =</span> <span class="st">"round"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ttestsarelinearmodels_files/figure-html/Linear regression and visualization-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Now, interpreting the results of the linear regression, we can see that <span class="math inline">\(\hat{\beta}_0\)</span> = 26.7584, in other words, the estimated average jump height for players wearing blue shoes is ≤ 26.7584 inches. Additionally, <span class="math inline">\(\hat{\beta}_1x\)</span> = 3.0058, in other words, the average jump height of players wearing red shoes is ≤ 3.0058 inches.</p>
 </section>
-<section id="returning-to-mainstream-medicine" class="level3">
-<h3 class="anchored" data-anchor-id="returning-to-mainstream-medicine">Returning to mainstream medicine</h3>
-<p>Now, this isn’t some sort of miracle healing story. My ailments began to return while getting my pre-requisite courses for nursing school, which involved a bunch of basic science classes.</p>
-<p>Taking these classes made me realize how much I did <em>not</em> know. I was better able to evaluate the claims commonly made in health research and ended up disassociating myself with functional medicine in general.</p>
-<p>When I went to nursing school, I got lucky to attend a huge academic research institution, where we had a “research distinction” program. By sheer luck, I got matched with a nutrition health scientist as my advisor, where I was able to see how science really worked.</p>
+<section id="how-this-all-connects" class="level1">
+<h1>How this all connects</h1>
+<p>Let’s pull up the results of both the t.test and the linear regression. Can you see what the similarities are? Before moving on, take a closer look at both the results, and then scroll down.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(jump_height <span class="sc">~</span> shoe_color, <span class="at">data =</span> jump_data, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  jump_height by shoe_color
+t = -4.4733, df = 78, p-value = 2.586e-05
+alternative hypothesis: true difference in means between group Blue and group Red is not equal to 0
+95 percent confidence interval:
+ -4.343579 -1.668066
+sample estimates:
+mean in group Blue  mean in group Red 
+          26.75840           29.76422 </code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> jump_height <span class="sc">~</span> shoe_color, <span class="at">data =</span> jump_data) <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = jump_height ~ shoe_color, data = jump_data)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-5.795 -1.972 -0.425  1.714  8.489 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)    26.7584     0.4751  56.317  &lt; 2e-16 ***
+shoe_colorRed   3.0058     0.6720   4.473 2.59e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.005 on 78 degrees of freedom
+Multiple R-squared:  0.2042,    Adjusted R-squared:  0.194 
+F-statistic: 20.01 on 1 and 78 DF,  p-value: 2.586e-05</code></pre>
+</div>
+</div>
+<p>When you dig into both results, you stumble upon some similarities:</p>
+<ul>
+<li><p>The y-intercept: Remember <span class="math inline">\(\hat{\beta}_0\)</span> from our regression model? It’s 26.7584. Take a peek at the mean jump height for the blue shoe group. Surprise, surprise! It’s exactly the same number.</p></li>
+<li><p>The slope coefficient: Now, let’s look at <span class="math inline">\(\hat{\beta}_1\)</span>, our slope from the regression. It’s 3.0058. Here’s where it gets interesting. Grab your t-test results: • Red shoe group mean: 29.76422 • Blue shoe group mean: 26.75480 Do a quick subtraction: 29.76422 - 26.75480 = 3.00582 Look familiar? It’s our regression slope!</p></li>
+</ul>
 </section>
-<section id="where-im-at-now" class="level3">
-<h3 class="anchored" data-anchor-id="where-im-at-now">Where I’m at now</h3>
-<p>I now find myself more aligned with “mainstream” medicine (whatever that means). I’m now interested in the big picture of how our healthcare system works, as opposed to the nitty gritty details of treating patients (although I do miss that work).</p>
-<p>After graduating with my BSN and doing some nutrition research, I ended up working for the amazing company Examine.com for a couple years, and now I develop clinical practice guidelines for a medical association.</p>
-</section>
-</section>
-<section id="the-purpose-of-this-blog" class="level2">
-<h2 class="anchored" data-anchor-id="the-purpose-of-this-blog">The purpose of this blog</h2>
-<p>The main purpose of this blog is to act as a diary of sorts while I think about or teach myself things related to biostatistics, epidemiology, health economics, and science as a whole. My hope is that, in a few years or so, I will look back at what I’ve written and be proud of how much I’ve learned, and realize how much I didn’t know.</p>
-<p>Please don’t take anything I say here as absolute truth, and please let me know if I’m horribly wrong on anything. I probably will be wrong, and I’m learning to be okay with that.</p>
+<section id="why-this-matters" class="level1">
+<h1>Why this matters</h1>
+<p>Hopefully this example helped expand your view on statistics a bit. Viewing statistics as a bunch of inflexible rules and tests can obscure the forest for the trees, and a connection like this reveals a hidden harmony in mathematics as a whole. By understanding these connections, you might be able to start crafting solutions to problems, rather than forcing square pegs into round holes.</p>
 
 
 </section>
