@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Nursing the Numbers"
+  favicon: favicon.svg
   navbar:
     right:
       - text: "About me" 
