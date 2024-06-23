@@ -11,7 +11,7 @@ image: thesickchild.jpg
 
 Greetings! Welcome to the inaugural post of my blog "Nursing the Numbers."
 
-As a quick introduction, I'm Louie Neri, a nurse who never ended up nursing, who somewhow ended up in the nutrition science world, and now finds himself in the clinical practice guideline extended universe. I wanted to give a brief introduction to myself, how I got here, and the goal of this blog.
+As a quick introduction, I'm Louie Neri, a nurse who never ended up nursing, who somehow ended up in the nutrition science world, and now finds himself in the clinical practice guideline extended universe. I wanted to give a brief introduction to myself, how I got here, and the goal of this blog.
 
 ### Health issues and functional medicine
 
