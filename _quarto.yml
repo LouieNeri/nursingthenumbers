@@ -17,6 +17,7 @@ website:
         
 format:
   html:
+    toc: true
     theme: 
       light: flatly
       dark: darkly
