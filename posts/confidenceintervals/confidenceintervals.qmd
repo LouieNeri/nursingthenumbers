@@ -1,0 +1,152 @@
+---
+title: "I am 95% confident that I don't know what a confidence interval is"
+author: "Louie Neri"
+date: "06/26/2024"
+draft: true
+format:
+  html:
+    toc: true
+    mermaid:
+      theme: default
+    code-fold: true
+---
+
+Confidence intervals (CI) have been the bane of my scientific existence. They are very unintuitive, and even statisticians [debate on how to best describe a confidence interval](https://www.bmj.com/content/366/bmj.l5381).
+
+Let's dive into the depths of my mind as I try to figure out what the heck a confidence interval is.
+
+# Confident about... what?
+
+The more specific definition of a 95% confidence interval (using 95% for the sake of convention) is as follows:
+
+> If I were to repeat this sampling process over and over, 95% of the confidence intervals would contain the true parameter value.
+
+Now, here's where the confusion lies. Intuitively, this would lead you to think that it is the probability that the true value is in that interval. NOPE!
+
+Let's look at it another way. Imagine we're trying to determine the mean height of all NBA players (yes, another basketball reference). Here's how it might play out:
+
+-   You get a random sample of players, calculate the mean height, and determine a 95% confidence interval.
+
+-   I decide to do the same thing. I get my own random sample, calculate the mean, and find my own 95% confidence interval.
+
+-   Then our friend Alexis joins in. She gets her random sample and calculates her mean and 95% confidence interval.
+
+If we (and others) kept doing this over and over, about 95% of all these confidence intervals would contain the true mean height of NBA players. However, for any single interval – yours, mine, or Alexis's – we can't know for certain whether it's one of the 95% that contains the true mean or one of the 5% that doesn't.
+
+I don't think it would be very useful to demonstrate this idea in much detail, since [Kristoffer Magmnusson's visualization is more than sufficient](https://rpsychologist.com/d3/ci/) and I would recommend playing around with it!
+
+[![Courtsey of Kristoffer Magmusson](images/clipboard-4120711539.png){width="335"}](https://rpsychologist.com/d3/ci/)
+
+# Interpreting single confidence intervals
+
+I think it's more useful to think about how to interpret *single* confidence intervals. Since, a majority of the time, we're reading studies that just spit out one confidence interval.
+
+When looking at a confidence interval, it's best to think of it as a measure of how *precise* the estimate is.
+
+The width of the confidence interval will tell you how close you are to the true estimate. Note, this does NOT tell you how accurate the estimate is.
+
+Let's simulate a meta-analysis for the sake of example.
+
+In this example, we are looking at the effect of my new teaching method called the Learning Optimization and Understanding through Interactive Engagement (LOUIE) Method, compared to traditional teaching methods, on math scores of high school students. Each study represents a different school studying the LOUIE method and comparing it to traditional teaching, and getting the mean test scores for each group.
+
+```{r}
+#set seed for reproducibility
+set.seed(1234)
+
+#load packages
+library("metafor")
+
+# Number of studies
+n <- 5
+
+# Simulate data
+sim_data <- data.frame(
+  study = paste("Study", 1:n),
+  author = c("Smith et al.", "Johnson et al.", "Williams et al.", "Brown et al.", "Davis et al."),
+  year = c(2018, 2019, 2020, 2021, 2022),
+  n1i = c(100, 150, 200, 120, 250),  # sample size group 1
+  n2i = c(110, 140, 190, 130, 250),  # sample size group 2
+  m1i = c(9.2, 9.5, 9.8, 10.2, 8.4),  # mean of group 1
+  m2i = c(9.0, 9.8, 10.3, 10.9, 8.5),  # mean of group 2
+  sd1i = c(2.1, 1.9, 2.3, 2.0, 2.2),  # standard deviation of group 1
+  sd2i = c(2.2, 2.0, 2.1, 2.3, 2.1)   # standard deviation of group 2
+)
+
+#calcuate SMD
+dat <- escalc(measure = "SMD",
+                       m1i = m1i,
+                       m2i = m2i,
+                       sd1i = sd1i,
+                       sd2i = sd2i,
+                       n1i = n1i,
+                       n2i = n2i,
+                       data = sim_data)
+
+#view
+dat
+
+#random effects model
+model_result <- rma(yi, vi, data = dat)
+
+#create forest plot
+forest(model_result, header = TRUE, xlab = "LOUIE vs Traditional")
+```
+
+In the meta-analysis above, we're looking at the standardized mean differences (SMDs) of 5 studies, and their 95% confidence intervals. As we can see, maybe there's something to the LOUIE method? All this talk about my teaching method is really a distraction, let's look at the confidence intervals.
+
+For the sake of brevity, I will not go into the math behind all of this. But in general, as the sample size increases, the confidence interval will get narrower, and thus, the estimate becomes a bit more precise.
+
+Let's play around and increase the sample size of both groups in study 5 from 250 to 500. Take a look at what happens to the confidence interval of that study.
+
+```{r}
+#set seed for reproducibility
+set.seed(1234)
+
+#load packages
+library("metafor")
+
+# Number of studies
+n <- 5
+
+# Simulate data
+sim_data <- data.frame(
+  study = paste("Study", 1:n),
+  author = c("Smith et al.", "Johnson et al.", "Williams et al.", "Brown et al.", "Davis et al."),
+  year = c(2018, 2019, 2020, 2021, 2022),
+  n1i = c(100, 150, 200, 120, 500),  # sample size group 1
+  n2i = c(110, 140, 190, 130, 500),  # sample size group 2
+  m1i = c(9.2, 9.5, 9.8, 10.2, 8.4),  # mean of group 1
+  m2i = c(9.0, 9.8, 10.3, 10.9, 8.5),  # mean of group 2
+  sd1i = c(2.1, 1.9, 2.3, 2.0, 2.2),  # standard deviation of group 1
+  sd2i = c(2.2, 2.0, 2.1, 2.3, 2.1)   # standard deviation of group 2
+)
+
+#calcuate SMD
+dat <- escalc(measure = "SMD",
+                       m1i = m1i,
+                       m2i = m2i,
+                       sd1i = sd1i,
+                       sd2i = sd2i,
+                       n1i = n1i,
+                       n2i = n2i,
+                       data = sim_data)
+
+#view
+dat
+
+#random effects model
+model_result <- rma(yi, vi, data = dat)
+
+#create forest plot
+forest(model_result, header = TRUE, xlab = "LOUIE vs Traditional")
+```
+
+Notice, it's a bit more narrow. This is because, we've increased the sample size, thus increasing the precision of the estimate.
+
+To get back to what I said earlier, this does NOT tell us how accurate this estimate is. Since we have no idea whether the studies have other sources of bias, like sampling bias, allocation bias, or measurement bias, that may affect the estimate. Increasing the sample size has increased our "confidence" about the true estimate, and that in the long run, if we do this over and over, 95% of the time, it will contain the true estimate.
+
+# Do you feel confident?
+
+Overall, confidence intervals don't make sense. But, they are useful to give us an idea of how precise an estimate is and their behavior in the long-run across identical studies. I think the confusion stems from the frequentist foundations of confidence intervals, and that our natural intuition does not think in this hypothetical world of constantly repeating experiments.
+
+If you really want to get the probability that the true parameter is in the interval, then look into the [Bayesian credible interval](https://en.wikipedia.org/wiki/Credible_interval#:~:text=credible%20intervals%20are%20intervals%20whose,not%20the%20object%20of%20probability.). But I can save that for another time.

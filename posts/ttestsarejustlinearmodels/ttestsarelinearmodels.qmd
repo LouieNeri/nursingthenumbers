@@ -66,7 +66,7 @@ Let me introduce you to the linear model! Believe it or not, most statistical te
 
 # Testing the world of shoe color and dunking
 
-```{r}
+```{r, echo = FALSE}
 #| label: loading packages
 #| results: hide
 
@@ -165,7 +165,7 @@ ggplot(jump_data, aes(x = shoe_color, y = jump_height, color = shoe_color)) +
   theme(legend.position = "none") +
    geom_line(data = mean_jump_data, #adding example regression line
             aes(x = shoe_color, y = mean_jump_height, group = 1),
-            size = 1.2,
+            linewidth = 1.2,
             color = "darkgray",
             lineend = "round")
 ```

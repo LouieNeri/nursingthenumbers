@@ -15,7 +15,6 @@ website:
         href: https://www.linkedin.com/in/louie-neri/
       - icon: github
         href: https://github.com/louieneri 
-        
 format:
   html:
     toc: true
