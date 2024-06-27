@@ -2,7 +2,6 @@
 title: "I am 95% confident that I don't know what a confidence interval is"
 author: "Louie Neri"
 date: "06/26/2024"
-draft: true
 format:
   html:
     toc: true
