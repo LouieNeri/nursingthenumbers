@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/confidenceintervals/confidenceintervals.html",
       "/posts/ttestsarejustlinearmodels/ttestsarelinearmodels.html",
       "/posts/welcome/index.html"
     ]
