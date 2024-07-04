@@ -6,7 +6,7 @@ format:
   html:
     toc: true
     mermaid:
-      theme: default
+      theme: neutral
     code-fold: true
 ---
 
@@ -60,7 +60,7 @@ flowchart TD
     
 ```
 
-Great! Now, you know exactly which test you need to do *and* when to do it. However, this is probably not the best statistical practice. For some if not most people, this will probably get the job done. But, you may find yourself in scenarios with messy data that do not fit neatly into the flow chart, inadvertently violate some crucial assumption of the statistical test, and your methods go bye-bye.
+Great! Now, you know exactly which test you need to do *and* when to do it. However, this is probably not the best statistical practice. For some if not most people, this will probably get the job done. But, you may find yourself in scenarios with messy data that do not fit neatly into the flow chart, leading you to inadvertently violate some crucial assumption of the statistical test, and your wonderfully designed study goes in the trash.
 
 Let me introduce you to the linear model! Believe it or not, most statistical tests are really just variations of the linear model. To understand this, let's simulate some data and see how a simple two sample t-test is really a linear model!
 
@@ -68,7 +68,7 @@ Let me introduce you to the linear model! Believe it or not, most statistical te
 
 ```{r, echo = FALSE}
 #| label: loading packages
-#| results: hide
+#| message: false
 
 library(tidyverse)
 library(ggthemes)
@@ -130,15 +130,15 @@ $$
 
 If you're a bit rusty:
 
--   $\hat{y}$ represents is the estimated dependent variable, in this case, vertical jump height.
+-   $\hat{y}$ represents is the estimated dependent variable, in this case, vertical jump height dependent on $x$ (in this case, shoe color).
 
 -   $\hat{\beta}_0$ represents the $\hat{y}$ intercept when x = 0, but in this case, it would be for those who are in the blue shoe group.
 
--   $\hat{\beta}_1x$ represents the estimated slope coefficient, which tell us that how much y changes, on average, for a one-unit increase in x.
+-   $\hat{\beta}_1x$ represents the estimated slope coefficient, which tell us that how much $y$ (jump height) changes, on average, for a one-unit increase in $x$.
 
-What you'll see in a moment, is that fitting a regression line using this binary predictor is the same as doing a two sample t-test.
+What you'll see in a moment, is that fitting a regression line using this binary predictor of shoe color, is the same as doing a two sample t-test.
 
-Let's compute the simple linear regression!
+Let's see what happens when we compute the linear regression.
 
 ```{r}
 #| label: Linear regression and visualization
@@ -188,9 +188,15 @@ lm(formula = jump_height ~ shoe_color, data = jump_data) |>
 
 When you dig into both results, you stumble upon some similarities:
 
--   The y-intercept: Remember $\hat{\beta}_0$ from our regression model? It's 26.7584. Take a peek at the mean jump height for the blue shoe group. Surprise, surprise! It's exactly the same number.
+-   **The y-intercept**: Remember $\hat{\beta}_0$ from our regression model? It's 26.7584. Take a peek at the mean jump height for the blue shoe group. Surprise, surprise! It's exactly the same number.
 
--   The slope coefficient: Now, let's look at $\hat{\beta}_1$, our slope from the regression. It's 3.0058. Here's where it gets interesting. Grab your t-test results: • Red shoe group mean: 29.76422 • Blue shoe group mean: 26.75480 Do a quick subtraction: 29.76422 - 26.75480 = 3.00582 Look familiar? It's our regression slope!
+-   **The slope coefficient:** Now, let's look at $\hat{\beta}_1$, our slope from the regression. It's 3.0058. Here's where it gets interesting. Grab your the means from both groups in t-test results:
+
+    -   Red shoe group mean: 29.76422
+
+    -   Blue shoe group mean: 26.75480
+
+    -   Do a quick subtraction: 29.76422 - 26.75480 = 3.00582 Look familiar? It's our regression slope!
 
 # Why this matters
 
