@@ -12,7 +12,7 @@ format:
 
 Confidence intervals (CI) have been the bane of my scientific existence. They are very unintuitive, and even statisticians [debate on how to best describe a confidence interval](https://www.bmj.com/content/366/bmj.l5381).
 
-Let's dive into the depths of my mind as I try to figure out what the heck a confidence interval is.
+Let's dive into the depths of my mind as I try to figure out what in the world a confidence interval is.
 
 # Confident about... what?
 
@@ -36,24 +36,26 @@ I don't think it would be very useful to demonstrate this idea in much detail, s
 
 [![Courtsey of Kristoffer Magmusson](images/clipboard-4120711539.png){width="335"}](https://rpsychologist.com/d3/ci/)
 
-# Interpreting single confidence intervals
-
 I think it's more useful to think about how to interpret *single* confidence intervals. Since, a majority of the time, we're reading studies that just spit out one confidence interval.
 
-When looking at a confidence interval, it's best to think of it as a measure of how *precise* the estimate is.
+# Interpreting single confidence intervals
 
-The width of the confidence interval will tell you how close you are to the true estimate. Note, this does NOT tell you how accurate the estimate is.
+When looking at a confidence interval, it's best to think of it as a measure of how *precise* the estimate is, but this does NOT tell you how accurate the estimate is.
+
+# My new teaching method
 
 Let's simulate a meta-analysis for the sake of example.
 
 In this example, we are looking at the effect of my new teaching method called the Learning Optimization and Understanding through Interactive Engagement (LOUIE) Method, compared to traditional teaching methods, on math scores of high school students. Each study represents a different school studying the LOUIE method and comparing it to traditional teaching, and getting the mean test scores for each group.
 
 ```{r}
-#set seed for reproducibility
-set.seed(1234)
+#| message: FALSE
 
 #load packages
 library("metafor")
+
+#set seed for reproducibility
+set.seed(1234)
 
 # Number of studies
 n <- 5
@@ -100,9 +102,6 @@ Let's play around and increase the sample size of both groups in study 5 from 25
 ```{r}
 #set seed for reproducibility
 set.seed(1234)
-
-#load packages
-library("metafor")
 
 # Number of studies
 n <- 5

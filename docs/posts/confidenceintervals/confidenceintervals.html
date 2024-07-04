@@ -192,6 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#confident-about-what" id="toc-confident-about-what" class="nav-link active" data-scroll-target="#confident-about-what">Confident about… what?</a></li>
   <li><a href="#interpreting-single-confidence-intervals" id="toc-interpreting-single-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-single-confidence-intervals">Interpreting single confidence intervals</a></li>
+  <li><a href="#my-new-teaching-method" id="toc-my-new-teaching-method" class="nav-link" data-scroll-target="#my-new-teaching-method">My new teaching method</a></li>
   <li><a href="#do-you-feel-confident" id="toc-do-you-feel-confident" class="nav-link" data-scroll-target="#do-you-feel-confident">Do you feel confident?</a></li>
   </ul>
 </nav>
@@ -204,12 +205,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>Confidence intervals (CI) have been the bane of my scientific existence. They are very unintuitive, and even statisticians <a href="https://www.bmj.com/content/366/bmj.l5381">debate on how to best describe a confidence interval</a>.</p>
-<p>Let’s dive into the depths of my mind as I try to figure out what the heck a confidence interval is.</p>
+<p>Let’s dive into the depths of my mind as I try to figure out what in the world a confidence interval is.</p>
 <section id="confident-about-what" class="level1">
 <h1>Confident about… what?</h1>
 <p>The more specific definition of a 95% confidence interval (using 95% for the sake of convention) is as follows:</p>
 <blockquote class="blockquote">
-<p>If I were to repeat this sampling process over and over, 95% of the confidence intervals would contain the true value.</p>
+<p>If I were to repeat this sampling process over and over, 95% of the confidence intervals would contain the true parameter value.</p>
 </blockquote>
 <p>Now, here’s where the confusion lies. Intuitively, this would lead you to think that it is the probability that the true value is in that interval. NOPE!</p>
 <p>Let’s look at it another way. Imagine we’re trying to determine the mean height of all NBA players (yes, another basketball reference). Here’s how it might play out:</p>
@@ -226,67 +227,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption>Courtsey of Kristoffer Magmusson</figcaption>
 </figure>
 </div>
+<p>I think it’s more useful to think about how to interpret <em>single</em> confidence intervals. Since, a majority of the time, we’re reading studies that just spit out one confidence interval.</p>
 </section>
 <section id="interpreting-single-confidence-intervals" class="level1">
 <h1>Interpreting single confidence intervals</h1>
-<p>I think it’s more useful to think about how to interpret <em>single</em> confidence intervals. Since, a majority of the time, we’re reading studies that just spit out one confidence interval.</p>
-<p>When looking at a confidence interval, it’s best to think of it as a measure of how <em>precise</em> the estimate is.</p>
-<p>The width of the confidence interval will tell you how close you are to the true estimate. Note, this does NOT tell you how accurate the estimate is.</p>
+<p>When looking at a confidence interval, it’s best to think of it as a measure of how <em>precise</em> the estimate is, but this does NOT tell you how accurate the estimate is.</p>
+</section>
+<section id="my-new-teaching-method" class="level1">
+<h1>My new teaching method</h1>
 <p>Let’s simulate a meta-analysis for the sake of example.</p>
 <p>In this example, we are looking at the effect of my new teaching method called the Learning Optimization and Understanding through Interactive Engagement (LOUIE) Method, compared to traditional teaching methods, on math scores of high school students. Each study represents a different school studying the LOUIE method and comparing it to traditional teaching, and getting the mean test scores for each group.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed for reproducibility</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"metafor"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#load packages</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"metafor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Matrix</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: metadat</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: numDeriv</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Loading the 'metafor' package (version 4.6-0). For an
-introduction to the package please type: help(metafor)</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of studies</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">study =</span> <span class="fu">paste</span>(<span class="st">"Study"</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">author =</span> <span class="fu">c</span>(<span class="st">"Smith et al."</span>, <span class="st">"Johnson et al."</span>, <span class="st">"Williams et al."</span>, <span class="st">"Brown et al."</span>, <span class="st">"Davis et al."</span>),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">n1i =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">120</span>, <span class="dv">250</span>),  <span class="co"># sample size group 1</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">n2i =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">140</span>, <span class="dv">190</span>, <span class="dv">130</span>, <span class="dv">250</span>),  <span class="co"># sample size group 2</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">m1i =</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">9.5</span>, <span class="fl">9.8</span>, <span class="fl">10.2</span>, <span class="fl">8.4</span>),  <span class="co"># mean of group 1</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">m2i =</span> <span class="fu">c</span>(<span class="fl">9.0</span>, <span class="fl">9.8</span>, <span class="fl">10.3</span>, <span class="fl">10.9</span>, <span class="fl">8.5</span>),  <span class="co"># mean of group 2</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd1i =</span> <span class="fu">c</span>(<span class="fl">2.1</span>, <span class="fl">1.9</span>, <span class="fl">2.3</span>, <span class="fl">2.0</span>, <span class="fl">2.2</span>),  <span class="co"># standard deviation of group 1</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd2i =</span> <span class="fu">c</span>(<span class="fl">2.2</span>, <span class="fl">2.0</span>, <span class="fl">2.1</span>, <span class="fl">2.3</span>, <span class="fl">2.1</span>)   <span class="co"># standard deviation of group 2</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#calcuate SMD</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">"SMD"</span>,</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m1i =</span> m1i,</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m2i =</span> m2i,</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd1i =</span> sd1i,</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd2i =</span> sd2i,</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1i =</span> n1i,</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n2i =</span> n2i,</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> sim_data)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#view</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed for reproducibility</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of studies</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">study =</span> <span class="fu">paste</span>(<span class="st">"Study"</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">author =</span> <span class="fu">c</span>(<span class="st">"Smith et al."</span>, <span class="st">"Johnson et al."</span>, <span class="st">"Williams et al."</span>, <span class="st">"Brown et al."</span>, <span class="st">"Davis et al."</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">n1i =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">120</span>, <span class="dv">250</span>),  <span class="co"># sample size group 1</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">n2i =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">140</span>, <span class="dv">190</span>, <span class="dv">130</span>, <span class="dv">250</span>),  <span class="co"># sample size group 2</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">m1i =</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">9.5</span>, <span class="fl">9.8</span>, <span class="fl">10.2</span>, <span class="fl">8.4</span>),  <span class="co"># mean of group 1</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">m2i =</span> <span class="fu">c</span>(<span class="fl">9.0</span>, <span class="fl">9.8</span>, <span class="fl">10.3</span>, <span class="fl">10.9</span>, <span class="fl">8.5</span>),  <span class="co"># mean of group 2</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd1i =</span> <span class="fu">c</span>(<span class="fl">2.1</span>, <span class="fl">1.9</span>, <span class="fl">2.3</span>, <span class="fl">2.0</span>, <span class="fl">2.2</span>),  <span class="co"># standard deviation of group 1</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd2i =</span> <span class="fu">c</span>(<span class="fl">2.2</span>, <span class="fl">2.0</span>, <span class="fl">2.1</span>, <span class="fl">2.3</span>, <span class="fl">2.1</span>)   <span class="co"># standard deviation of group 2</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#calcuate SMD</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">"SMD"</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m1i =</span> m1i,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m2i =</span> m2i,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd1i =</span> sd1i,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd2i =</span> sd2i,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1i =</span> n1i,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n2i =</span> n2i,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> sim_data)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#view</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -299,11 +286,11 @@ introduction to the package please type: help(metafor)</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random effects model</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>model_result <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data =</span> dat)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create forest plot</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(model_result, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">xlab =</span> <span class="st">"LOUIE vs Traditional"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random effects model</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>model_result <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data =</span> dat)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create forest plot</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(model_result, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">xlab =</span> <span class="st">"LOUIE vs Traditional"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -319,40 +306,37 @@ introduction to the package please type: help(metafor)</code></pre>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed for reproducibility</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#load packages</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"metafor"</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of studies</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">study =</span> <span class="fu">paste</span>(<span class="st">"Study"</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">author =</span> <span class="fu">c</span>(<span class="st">"Smith et al."</span>, <span class="st">"Johnson et al."</span>, <span class="st">"Williams et al."</span>, <span class="st">"Brown et al."</span>, <span class="st">"Davis et al."</span>),</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>),</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">n1i =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">120</span>, <span class="dv">500</span>),  <span class="co"># sample size group 1</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">n2i =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">140</span>, <span class="dv">190</span>, <span class="dv">130</span>, <span class="dv">500</span>),  <span class="co"># sample size group 2</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">m1i =</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">9.5</span>, <span class="fl">9.8</span>, <span class="fl">10.2</span>, <span class="fl">8.4</span>),  <span class="co"># mean of group 1</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">m2i =</span> <span class="fu">c</span>(<span class="fl">9.0</span>, <span class="fl">9.8</span>, <span class="fl">10.3</span>, <span class="fl">10.9</span>, <span class="fl">8.5</span>),  <span class="co"># mean of group 2</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd1i =</span> <span class="fu">c</span>(<span class="fl">2.1</span>, <span class="fl">1.9</span>, <span class="fl">2.3</span>, <span class="fl">2.0</span>, <span class="fl">2.2</span>),  <span class="co"># standard deviation of group 1</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd2i =</span> <span class="fu">c</span>(<span class="fl">2.2</span>, <span class="fl">2.0</span>, <span class="fl">2.1</span>, <span class="fl">2.3</span>, <span class="fl">2.1</span>)   <span class="co"># standard deviation of group 2</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co">#calcuate SMD</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">"SMD"</span>,</span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m1i =</span> m1i,</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m2i =</span> m2i,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd1i =</span> sd1i,</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd2i =</span> sd2i,</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1i =</span> n1i,</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n2i =</span> n2i,</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> sim_data)</span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a><span class="co">#view</span></span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#set seed for reproducibility</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of studies</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">study =</span> <span class="fu">paste</span>(<span class="st">"Study"</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">author =</span> <span class="fu">c</span>(<span class="st">"Smith et al."</span>, <span class="st">"Johnson et al."</span>, <span class="st">"Williams et al."</span>, <span class="st">"Brown et al."</span>, <span class="st">"Davis et al."</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">n1i =</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">200</span>, <span class="dv">120</span>, <span class="dv">500</span>),  <span class="co"># sample size group 1</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">n2i =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">140</span>, <span class="dv">190</span>, <span class="dv">130</span>, <span class="dv">500</span>),  <span class="co"># sample size group 2</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">m1i =</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">9.5</span>, <span class="fl">9.8</span>, <span class="fl">10.2</span>, <span class="fl">8.4</span>),  <span class="co"># mean of group 1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">m2i =</span> <span class="fu">c</span>(<span class="fl">9.0</span>, <span class="fl">9.8</span>, <span class="fl">10.3</span>, <span class="fl">10.9</span>, <span class="fl">8.5</span>),  <span class="co"># mean of group 2</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd1i =</span> <span class="fu">c</span>(<span class="fl">2.1</span>, <span class="fl">1.9</span>, <span class="fl">2.3</span>, <span class="fl">2.0</span>, <span class="fl">2.2</span>),  <span class="co"># standard deviation of group 1</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd2i =</span> <span class="fu">c</span>(<span class="fl">2.2</span>, <span class="fl">2.0</span>, <span class="fl">2.1</span>, <span class="fl">2.3</span>, <span class="fl">2.1</span>)   <span class="co"># standard deviation of group 2</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#calcuate SMD</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">escalc</span>(<span class="at">measure =</span> <span class="st">"SMD"</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m1i =</span> m1i,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">m2i =</span> m2i,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd1i =</span> sd1i,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">sd2i =</span> sd2i,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n1i =</span> n1i,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                       <span class="at">n2i =</span> n2i,</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> sim_data)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#view</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -365,11 +349,11 @@ introduction to the package please type: help(metafor)</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random effects model</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>model_result <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data =</span> dat)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create forest plot</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(model_result, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">xlab =</span> <span class="st">"LOUIE vs Traditional"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#random effects model</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>model_result <span class="ot">&lt;-</span> <span class="fu">rma</span>(yi, vi, <span class="at">data =</span> dat)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#create forest plot</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">forest</span>(model_result, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">xlab =</span> <span class="st">"LOUIE vs Traditional"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -384,7 +368,8 @@ introduction to the package please type: help(metafor)</code></pre>
 </section>
 <section id="do-you-feel-confident" class="level1">
 <h1>Do you feel confident?</h1>
-<p>Overall, confidence intervals don’t make sense. But, they are useful to give us an idea of how precise an estimate is and their behavior in the long-run across identical studies. If you really want to get the probability that the true parameter is in the interval, then look into the <a href="https://en.wikipedia.org/wiki/Credible_interval#:~:text=credible%20intervals%20are%20intervals%20whose,not%20the%20object%20of%20probability.">Bayesian credible interval</a>. But I can save that for another time.</p>
+<p>Overall, confidence intervals don’t make sense. But, they are useful to give us an idea of how precise an estimate is and their behavior in the long-run across identical studies. I think the confusion stems from the frequentist foundations of confidence intervals, and that our natural intuition does not think in this hypothetical world of constantly repeating experiments.</p>
+<p>If you really want to get the probability that the true parameter is in the interval, then look into the <a href="https://en.wikipedia.org/wiki/Credible_interval#:~:text=credible%20intervals%20are%20intervals%20whose,not%20the%20object%20of%20probability.">Bayesian credible interval</a>. But I can save that for another time.</p>
 
 
 </section>
