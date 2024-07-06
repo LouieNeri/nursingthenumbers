@@ -53,7 +53,7 @@ ggplot(df_long, aes(x = value, fill = distribution)) +
 
 # Null hypothesis significance testing
 
-Hypothesis testing is usually when you really start to feel like a scientist. You're usually given this framework, called Null Hypothesis Significance Testing (NHST):
+Starting hypothesis testing is usually when you really start to feel like a scientist. You're usually given this framework, called Null Hypothesis Significance Testing (NHST):
 
 1.  Set up a null hypothesis, which is always that there is "no difference" or "no zero correlation" or "zero association.
 2.  Have an alternative hypothesis, which is always contradictory of the null.
