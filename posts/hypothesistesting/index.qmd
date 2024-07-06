@@ -23,16 +23,19 @@ set.seed(123)
 null <- rnorm(1000, mean = 0, sd = 1)
 alt <- rnorm(1000, mean = 2, sd = 1)
 
+#create dataframe
 df <- data.frame(
   null = null,
   alt = alt
 )
 
+#create long dataframe
 df_long <- df |> 
   pivot_longer(cols = everything(),
                names_to = "distribution",
                values_to = "value")
 
+#plot distribution
 ggplot(df_long, aes(x = value, fill = distribution)) +
   geom_density(alpha = 0.5) +
    geom_vline(xintercept = 0, linetype = "dashed", color = "#2A9D8F", linewidth = 1) +
@@ -71,13 +74,14 @@ This blog post was inspired through a combination of this paper, [Mindless Stati
 Ronald Fisher first came up with this idea of p-values back in the 1920's, and came up with a whole process for testing hypothesis in the 1950s, which is as follows:
 
 1.  Set up a null hypothesis (this does not have to be a nil hypothesis, that there's no difference or no association).
-2.  Run the experiment
-3.  Run the experiment and report the exact level of significance/p-value
-4.  If the p-value is below a "significance level" one of two things happened
+2.  Run the experiment and report the exact level of significance/p-value (e.g., p = 0.0412, NOT p \< 0.05)
+3.  If the p-value is below a "significance level" one of two things happened
     -   The null hypothesis is true but you got a rare event
     -   The null hypothesis or other assumptions were wrong.
 
-Fisher's approach to hypothesis testing differs significantly from NHST. In Fisher's view, there isn't a formal "alternative" hypothesis, and the concept of a fixed significance level, such as 5%, was more of a recommendation than a strict rule. As my former coworker Greg Lopez of Examine.com insightfully noted, Fisher's methods are quite "artsy" and particularly useful for exploratory research where theory isn't well-established. In Fisher's paradigm, p-values are interpreted as measures of the strength of evidence against the null hypothesis; the lower the p-value, the more strongly the result contradicts the null. Importantly, the "null" hypothesis isn't always a "nil" hypothesis (i.e., assuming no effect), but rather a hypothesis to be "nullified." It represents what we would expect to happen under normal circumstances, and the experiment aims to nullify this expectation. While researchers set a significance level in their minds beforehand, there isn't a hard cutoff for decision-making.
+Fisher's approach to hypothesis testing differs significantly from NHST. In Fisher's view, there isn't a formal "alternative" hypothesis, and the concept of a fixed significance level, such as 5%, was more of a recommendation than a strict rule. As my former coworker Greg Lopez of Examine.com insightfully noted, Fisher's methods are quite "artsy" and particularly useful for exploratory research where theory isn't well-established.
+
+In Fisher's paradigm, p-values are interpreted as measures of the strength of evidence against the null hypothesis; the lower the p-value, the more strongly the result contradicts the null. Importantly, the "null" hypothesis isn't always a "nil" hypothesis (i.e., assuming no effect), but rather a hypothesis to be "nullified." It represents what we would expect to happen under a specific circumstance, and the experiment aims to nullify this expectation. While researchers set a significance level in their minds beforehand, there isn't a hard cutoff like in NHST or what we're about to learn about next.
 
 # Neyman-Pearson, can't we all just get along?
 
