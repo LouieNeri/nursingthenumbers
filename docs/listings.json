@@ -2,8 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/confidenceintervals/confidenceintervals.html",
-      "/posts/ttestsarejustlinearmodels/ttestsarelinearmodels.html",
+      "/posts/hypothesistesting/index.html",
+      "/posts/confidenceintervals/index.html",
+      "/posts/ttestsarejustlinearmodels/index.html",
       "/posts/welcome/index.html"
     ]
   }
