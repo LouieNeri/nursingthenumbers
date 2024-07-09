@@ -134,7 +134,7 @@ If you're a bit rusty:
 
 -   $\hat{\beta}_0$ represents the $\hat{y}$ intercept when x = 0, but in this case, it would be for those who are in the blue shoe group.
 
--   $\hat{\beta}_1x$ represents the estimated slope coefficient, which tell us that how much $y$ (jump height) changes, on average, for a one-unit increase in $x$.
+-   $\hat{\beta}_1x$ represents the estimated slope coefficient, which tell us that how much $y$ (jump height) changes, on average, for a unit change in $x$.
 
 What you'll see in a moment, is that fitting a regression line using this binary predictor of shoe color, is the same as doing a two sample t-test.
 
