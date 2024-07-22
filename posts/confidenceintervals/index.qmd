@@ -40,7 +40,7 @@ I think it's more useful to think about how to interpret *single* confidence int
 
 # Interpreting single confidence intervals
 
-When looking at a confidence interval, it's best to think of it as a measure of how *precise* the estimate is, but this does NOT tell you how accurate the estimate is.
+When looking at a confidence interval, it's best to think of it as a measure of how *precise* the estimate is. Randomness plays a huge factor in how wide a confidence interval is. However, getting larger and larger samples for your estimate can help reduce this randomness, and in turn, reduce the interval.
 
 # My new teaching method
 
