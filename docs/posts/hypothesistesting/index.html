@@ -284,15 +284,15 @@ window.Quarto = {
 </div>
 <section id="null-hypothesis-significance-testing" class="level1">
 <h1>Null hypothesis significance testing</h1>
-<p>Starting hypothesis testing is usually when you really start to feel like a scientist. You’re usually given this framework, called Null Hypothesis Significance Testing (NHST):</p>
+<p>Starting to conduct hypothesis testing is when you really start to feel like a scientist. You’re usually given this framework for testing hypotheses, called Null Hypothesis Significance Testing (NHST). It goes something like this:</p>
 <ol type="1">
 <li>Set up a null hypothesis, which is always that there is “no difference” or “no zero correlation” or “zero association.</li>
 <li>Have an alternative hypothesis, which is always contradictory of the null.</li>
-<li>Set 5% as a convention for rejection the null.</li>
-<li>Run the experiment and report p-values as an inequality (e.g., p &lt; 0.05, p &lt; 0.001)</li>
+<li>Always set 5% as the significance level for rejecting the null hypothesis.</li>
+<li>Run the experiment and report p-values as an inequality if it’s significant (e.g., p &lt; 0.05).</li>
 <li>Do this for every experiment forever and ever.</li>
 </ol>
-<p>Now, this process has been largely critiqued for a couple of reasons. One of them, being the Bayesians who feel that frequentist statistics is the root of all evil. Another reason come from the more conventional/frequentist statisticians who say that it is simply a misrepresentation of how this process was initially developed. I’m a statistical agnostic, and find myself more in the latter camp in this whole debacle.</p>
+<p>Now, this process has been largely critiqued. One of them, being the Bayesians who feel that frequentist statistics is the root of all evil. Another critique from the more conventional/frequentist statisticians who say that it is simply a misrepresentation of how this process was initially developed. I’m a statistical agnostic, and find myself more in the latter camp in this whole debacle.</p>
 <p>Let’s think about the history of how hypothesis testing began, and why this process outlined above isn’t quite what the creators intended.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -304,7 +304,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This blog post was inspired through a combination of this paper, <a href="https://www.sciencedirect.com/science/article/abs/pii/S1053535704000927">Mindless Statistics by Gerd Gigerenzer (2004)</a>, and my wonderful former co-worker, <a href="https://examine.com/about/#gregorylopez">Greg Lopez of Examine.com</a></p>
+<p>This blog post was inspired through a combination of this paper, <a href="https://www.sciencedirect.com/science/article/abs/pii/S1053535704000927">Mindless Statistics by Gerd Gigerenzer (2004)</a>, and my wonderful co-worker/stoic/stats-wizard, <a href="https://examine.com/about/#gregorylopez">Greg Lopez of Examine.com</a></p>
 </div>
 </div>
 </section>
@@ -320,25 +320,25 @@ Note
 <li>The null hypothesis or other assumptions were wrong.</li>
 </ul></li>
 </ol>
-<p>Fisher’s approach to hypothesis testing differs significantly from NHST. In Fisher’s view, there isn’t a formal “alternative” hypothesis, and the concept of a fixed significance level, such as 5%, was more of a recommendation than a strict rule. As my former coworker Greg Lopez of Examine.com insightfully noted, Fisher’s methods are quite “artsy” and particularly useful for exploratory research where theory isn’t well-established.</p>
+<p>This looks a bit different than what we first outlined from NHST. In Fisher’s world, there is no “alternative” hypothesis and the concept of a fixed significance level, such as 5%, was more of a recommendation than a strict rule. As my former coworker Greg Lopez of Examine.com insightfully noted, Fisher’s methods are quite “artsy” and particularly useful for exploratory research where theory isn’t well-established.</p>
 <p>In Fisher’s paradigm, p-values are interpreted as measures of the strength of evidence against the null hypothesis; the lower the p-value, the more strongly the result contradicts the null. Importantly, the “null” hypothesis isn’t always a “nil” hypothesis (i.e., assuming no effect), but rather a hypothesis to be “nullified.” It represents what we would expect to happen under a specific circumstance, and the experiment aims to nullify this expectation. While researchers set a significance level in their minds beforehand, there isn’t a hard cutoff like in NHST or what we’re about to learn about next.</p>
 </section>
 <section id="neyman-pearson-cant-we-all-just-get-along" class="level1">
 <h1>Neyman-Pearson, can’t we all just get along?</h1>
 <p>Fisher’s sworn enemies, Jerzey Neyman and Ergon Pearson, were highly critical of Fisher. They had another view of this whole process, and came up with this method of hypothesis testing:</p>
 <ol type="1">
-<li>Set up two hypothesis, your main hypothesis (can be null) and the alternative hypothesis, and decide your <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> levels before hand, which defines your rejection region</li>
+<li>Set up two hypotheses, your main hypothesis (usually nil, but can be anything) and the alternative hypothesis, and decide your <span class="math inline">\(\alpha\)</span> (false positive) and <span class="math inline">\(\beta\)</span> (false negative) levels before hand, which defines your rejection region.</li>
 <li>Run the experiment, and if the data falls into the rejection region, you accept the alternative hypothesis, otherwise, accept the main hypothesis.
 <ul>
-<li>You are only ACTING as if it were true, not truly believing in it.</li>
+<li>You are only ACTING as if the hypothesis were true, not truly believing in it.</li>
 </ul></li>
 </ol>
 <p>This seems to be much more involved and requires more prior information compared to Fisher’s approach. In this case, you technically don’t need a p-value, but instead, just the test statistic. This approach, can be very useful in fields with strong theory and/or the ability to repeat experiments or procedures over and over (think manufacturing or physics).</p>
-<p>In the Neyman-Pearson approach, there is a hard cutoff determined ahead of time, to create a binary decision, acting as if a hypothesis were true. The hard cutoff requires some thinking on your end, and really depends on your scenario.</p>
+<p>In the Neyman-Pearson approach, there is a hard cutoff determined ahead of time, to create a binary decision, allowing you to act as if a hypothesis were true. The hard cutoff requires some thinking on your end, and really depends on your scenario.</p>
 </section>
 <section id="the-frankenstein-combination-of-the-two" class="level1">
 <h1>The Frankenstein combination of the two</h1>
-<p>After learning about the Fisher and Neyman-Pearson approaches, you’ll see some similarities between the two and NHST.</p>
+<p>After learning about the Fisher and Neyman-Pearson approaches, you’ll see some similarities between the two and NHST. Let’s look at them again:</p>
 <ol type="1">
 <li>Set up a null hypothesis, which is always that there is “no difference” or “no zero correlation” or “zero association.</li>
 <li>Have an alternative hypothesis, which is always contradictory of the null.</li>
@@ -346,11 +346,11 @@ Note
 <li>Run the experiment and report p-values as an inequality (e.g., p &lt; 0.05, p &lt; 0.001)</li>
 <li>Do this for every experiment forever and ever.</li>
 </ol>
-<p>Notice, the first step includes a null hypothesis, but the hypothesis does NOT have to be a nil hypothesis, according to the Fisher method. Additionally, this “null-hypothesis” in the first step isn’t really anywhere in the Neyman-Pearson method, which focuses on a “main hypothesis.”</p>
+<p>Notice, the first step includes a null hypothesis, but the hypothesis does NOT have to be a nil hypothesis, according to the Fisher method. Additionally, this “null-hypothesis” in the first step isn’t really anywhere in the Neyman-Pearson method, which focuses on a “main hypothesis.” Do you see any other parts where NHST overlaps with Fisher and Neyman-Pearson’s methods?</p>
 </section>
 <section id="so-what-am-i-supposed-to-do" class="level1">
 <h1>So, what am I supposed to do?</h1>
-<p>Understanding the history of how these tests were developed will allow you to be a bit more flexible in interpreting results and/or running experiments. If you’re in a field that has relatively weak theory, then perhaps you can interpret the results through the Fisher lens, and be a bit more flexible in how much the data have “nullified” the hypothesis. If you’re in a field that has a strong theory, or need to make binary (yes/no) decisions, then perhaps we can swim in the Neyman-Pearson waters for a bit, and act as if your hypothesis is true.</p>
+<p>Understanding the history of how these tests were developed will allow you to be a bit more flexible in interpreting results and/or running experiments. If you’re in a field that has relatively weak theory, then perhaps you can interpret results through the Fisher lens, and be a bit more flexible in how much the data have “nullified” the hypothesis. If you’re in a field that has a strong theory, or need to make binary (yes/no) decisions, then perhaps we can swim in the Neyman-Pearson waters for a bit, and act as if your hypothesis is true.</p>
 <p>But mixing the two using NHST would not be ideal, as these two methods stem from fundamentally different philosophies, and can lead to misinterpretations of your findings or poor study design. Or worse, you can make a statistician die inside, just a tiny bit.</p>
 
 
