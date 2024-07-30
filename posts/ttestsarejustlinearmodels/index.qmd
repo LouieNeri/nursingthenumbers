@@ -76,7 +76,7 @@ library(ggthemes)
 
 Here's the scenario: we live in a hypothetical world where shoe color affects the vertical of basketball players. In this case, red shoes allow players to jump higher when compared to blue shoes. Since I cannot dunk a basketball (I'm 5'7") and would love for this to be true, I'm going to put this to the test.
 
-I've recruited 80 players to study this shoe, allocating 40 players to wear the blue shoes and 40 to wear the red shoes. Each player records a vertical jump test, and their best height is recorded. Let's simulate this data and create a box plot to see how it looks.
+I've recruited 80 players to study this shoe, allocating 40 players to wear the blue shoes and 40 to wear the red shoes. Each player records a vertical jump height test. Let's simulate this data and create a box plot to see how it looks.
 
 ```{r}
 #| label: Simulating and visualizing data
@@ -114,7 +114,7 @@ ggplot(jump_data, aes(x = shoe_color, y = jump_height, color = shoe_color)) +
 
 ```
 
-Intuitively, we can tell that the blue shoes indeed increase vertical jump. However, let's verify this with the good ole two sample t-test.
+Intuitively, we can tell that the red shoes indeed increase vertical jump height. However, let's verify this with the good ole two sample t-test.
 
 ```{r}
 #| label: Doing a t-test
