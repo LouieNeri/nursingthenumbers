@@ -91,7 +91,7 @@ Fisher's sworn enemies, Jerzey Neyman and Ergon Pearson, had another view of thi
 3.  Run the experiment, and if the data falls into the rejection region, you accept the alternative hypothesis, otherwise, accept the main hypothesis.
     -   You are only ACTING as if the hypothesis were true, not truly believing in it.
 
-This seems to be much more involved and requires more prior information compared to Fisher's approach. In this case, you technically don't need a p-value, but instead, just the test statistic. This approach, can be very useful in fields with strong theory and/or the ability to repeat experiments or procedures over and over (think manufacturing or physics).
+This is much more involved and requires more prior information compared to Fisher's approach. In this case, you technically don't need a p-value, but instead, just the test statistic. By setting your $\alpha$ and $\beta$ level's ahead of time, you will know that you get a certain number of false positives or false negatives. This approach, can be very useful in fields with strong theory and/or the ability to repeat experiments or procedures over and over (think manufacturing or physics).
 
 In the Neyman-Pearson approach, there is a hard cutoff determined ahead of time, to create a binary decision, allowing you to act as if a hypothesis were true. The hard cutoff requires some thinking on your end and really depends on how rigorous you want to be.
 
